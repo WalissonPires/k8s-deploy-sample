@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: docker-registry
+  namespace: k8ssample
+type: kubernetes.io/dockerconfigjson
+stringData:
+  .dockerconfigjson: |
+    {
+      "auths": {
+        "docker.io": {
+          "username": "DOCKERHUB_USER",
+          "password": "DOCKERHUB_SENHA",
+          "email": "DOCKERHUB_EMAIL"
+        }
+      }
+    }

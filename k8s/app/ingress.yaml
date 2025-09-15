@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dotnetapi
+  namespace: k8ssample
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  rules:
+    - host: k8s-dotnetapi.wprm.com.br
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dotnetapi
+                port:
+                  number: 80
+  ingressClassName: nginx
+  tls:
+    - hosts: [ "k8s-dotnetapi.wprm.com.br" ]
+      secretName: k8ssample-tls

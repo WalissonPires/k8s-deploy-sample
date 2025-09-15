@@ -1,0 +1,38 @@
+name: Apply K8s Manifests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "k8s/**/*.yaml"
+
+env:
+  K8S_PATH: k8s/app/
+  DEPLOY_NAME: dotnetapi
+  NAMESPACE: k8ssample
+
+jobs:
+  apply-manifests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v4
+        with:
+          version: v1.30.0
+
+      - name: Configure kubeconfig
+        run: |
+          echo "${{ secrets.KUBECONFIG_DATA }}" | base64 -d > $HOME/.kube/config
+
+      - name: Apply manifests
+        run: |
+          kubectl --insecure-skip-tls-verify apply -f ${{ env.K8S_PATH }}
+          kubectl --insecure-skip-tls-verify rollout status deployment/${{ env.DEPLOY_NAME }} -n ${{ env.NAMESPACE }}
+        #run: |
+        #  kubectl --insecure-skip-tls-verify apply -f ${{ env.K8S_PATH }}/deployment.yaml
+        #  kubectl --insecure-skip-tls-verify rollout status deployment/${{ env.DEPLOY_NAME }} -n ${{ env.NAMESPACE }}

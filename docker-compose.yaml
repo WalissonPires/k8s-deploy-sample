@@ -1,0 +1,15 @@
+services:
+  webapi:
+    image: wprmdev/dotnet-sample:v1.0.0
+    ports:
+      - "5001:8080"
+    environment:
+      LOGGING__LOGLEVEL__DEFAULT: warning
+      Logging__Console__LogLevel__Microsoft.Hosting.Lifetime: information
+      DatabaseUrl: postgresql://postgres:masterkey@host.docker.internal/dotnet-sample-db
+      JwtKey: MY_JWT_KEY_SAMPLE
+      PublicUrl: https://myapi.com.br
+      Enabled: true
+    extra_hosts:
+      # Para acessar serviços rodando na maquina host (fora dos containers)
+      - "host.docker.internal:host-gateway"

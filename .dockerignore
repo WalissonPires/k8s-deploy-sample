@@ -1,0 +1,6 @@
+/src/obj/
+/src/bin/
+/src/appsettings.Development.json
+/Dockerfile
+/.gitignore
+/.dockerignore

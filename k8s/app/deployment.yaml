@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnetapi
+  namespace: k8ssample
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dotnetapi
+  template:
+    metadata:
+      labels:
+        app: dotnetapi
+    spec:
+      automountServiceAccountToken : false
+      imagePullSecrets:
+        - name: docker-registry
+      containers:
+        - name: dotnetapi
+          image: wprmdev/dotnet-sample:v1.0.0
+          resources:
+            requests:
+              memory: "200Mi"
+              cpu: "100m"
+            limits:
+              memory: "301Mi"
+              cpu: "201m"
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: dotnetapi-configs
+            - secretRef:
+                name: dotnetapi-secrets
+          env:
+            - name: DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE
+              value: "false"
+          livenessProbe:
+            httpGet:
+              #path: /healthz/live
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              #path: /healthz/ready
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
