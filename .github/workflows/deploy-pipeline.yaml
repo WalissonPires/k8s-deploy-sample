@@ -7,6 +7,13 @@ on:
     paths:
       - "k8s/**/*.yaml"
 
+  workflow_run:
+    workflows: ["Build"]
+    types:
+      - completed
+    branches:
+      - main
+
 env:
   K8S_PATH: k8s/app
   DEPLOY_NAME: dotnetapi
@@ -15,6 +22,10 @@ env:
 jobs:
   apply-manifests:
     runs-on: ubuntu-latest
+
+    if: |
+      (github.event_name == 'push') ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
 
     steps:
       - name: Checkout repo
