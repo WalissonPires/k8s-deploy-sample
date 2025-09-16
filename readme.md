@@ -90,8 +90,11 @@ cd k8s/app
 cat >> .env.production << EOL
 #name: dotnetapi-secrets
 #namespace: k8ssample
-DATABASE_URL=postgres://user:password@host/dbname
-PUBLIC_URL=https://k8s-dotnetapi.wprm.com.br
+DatabaseUrl=postgres://user:password@host/dbname
+PublicUrl=https://k8s-dotnetapi.wprm.com.br
+JwtKey=MY_PWT_KEY
+Enabled=true
+File=base64:aGVsbG8K
 EOL
 
 # Gerar o SealedSecret a partir do .env
