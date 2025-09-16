@@ -18,7 +18,7 @@ spec:
         - name: docker-registry
       containers:
         - name: dotnetapi
-          image: wprmdev/dotnet-sample:v1.0.1
+          image: wprmdev/dotnet-sample:main
           resources:
             requests:
               memory: "200Mi"
