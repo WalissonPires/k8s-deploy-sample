@@ -64,6 +64,16 @@ git tag v1.0.0
 git push origin v1.0.0
 ```
 
+Se precisar fazer alguma correção (caso algum teste falhe) e publicar novamente a mesma versão basta excluir a tag e anexer no novo commit:
+
+```sh
+git tag -d v1.0.1
+git push origin --delete v1.0.1
+
+git tag v1.0.1
+git push origin v1.0.1
+```
+
 O push da tag dispara o **workflow de Build**, que:
 1. Builda e publica a imagem Docker com a versão da tag.
 2. Atualiza o `deployment.yaml` com a nova tag.
