@@ -11,8 +11,6 @@ on:
     workflows: ["Build"]
     types:
       - completed
-    branches:
-      - main
 
 env:
   K8S_PATH: k8s/app
