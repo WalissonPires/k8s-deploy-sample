@@ -8,7 +8,7 @@ on:
       - 'v*.*.*'
 
 env:
-  K8S_PATH: ./k8s
+  K8S_PATH: ./k8s/app
   # For private registry
   # IMAGE_NAME: dotnet-sample
   # For DockerHub

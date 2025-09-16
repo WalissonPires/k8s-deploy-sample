@@ -8,7 +8,7 @@ on:
       - "k8s/**/*.yaml"
 
 env:
-  K8S_PATH: k8s/app/
+  K8S_PATH: k8s/app
   DEPLOY_NAME: dotnetapi
   NAMESPACE: k8ssample
 
